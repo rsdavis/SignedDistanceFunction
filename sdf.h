@@ -113,14 +113,14 @@ int SDF :: construct(double * lsf, int * dims, int ndims, double band, double to
     if (ndims == 2) sdf_dims[2] = 1;
     else if (ndims == 3) sdf_dims[2] = dims[2];
     
-    sign = new double [dims[0]*dims[1]*dims[2]];
-    sdf_dt = new double [dims[0]*dims[1]*dims[2]];
+    sign = new double [sdf_dims[0]*sdf_dims[1]*sdf_dims[2]];
+    sdf_dt = new double [sdf_dims[0]*sdf_dims[1]*sdf_dims[2]];
 
-    for (int i=0; i<dims[0]; i++)
-    for (int j=0; j<dims[1]; j++)
-    for (int k=0; k<dims[2]; k++)
+    for (int i=0; i<sdf_dims[0]; i++)
+    for (int j=0; j<sdf_dims[1]; j++)
+    for (int k=0; k<sdf_dims[2]; k++)
     {
-        int ndx = i*dims[1]*dims[2] + j*dims[2] + k;
+        int ndx = i*sdf_dims[1]*sdf_dims[2] + j*sdf_dims[2] + k;
 
         if (lsf[ndx] > 0) sign[ndx] = 1;
         else if (lsf[ndx] < 0) sign[ndx] = -1;
@@ -131,11 +131,11 @@ int SDF :: construct(double * lsf, int * dims, int ndims, double band, double to
     {
         max_dt = 0.0;
 
-        for (int i=0; i<dims[0]; i++)
-        for (int j=0; j<dims[1]; j++)
-        for (int k=0; k<dims[2]; k++)
+        for (int i=0; i<sdf_dims[0]; i++)
+        for (int j=0; j<sdf_dims[1]; j++)
+        for (int k=0; k<sdf_dims[2]; k++)
         {
-            int ndx = i*dims[1]*dims[2] + j*dims[2] + k;
+            int ndx = i*sdf_dims[1]*sdf_dims[2] + j*sdf_dims[2] + k;
 
             if (fabs(lsf[ndx]) >= band) {
                 sdf_dt[ndx] = 0;
@@ -154,11 +154,11 @@ int SDF :: construct(double * lsf, int * dims, int ndims, double band, double to
             }
         }
 
-        for (int i=0; i<dims[0]; i++)
-        for (int j=0; j<dims[1]; j++)
-        for (int k=0; k<dims[2]; k++)
+        for (int i=0; i<sdf_dims[0]; i++)
+        for (int j=0; j<sdf_dims[1]; j++)
+        for (int k=0; k<sdf_dims[2]; k++)
         {
-            int ndx = i*dims[1]*dims[2] + j*dims[2] + k;
+            int ndx = i*sdf_dims[1]*sdf_dims[2] + j*sdf_dims[2] + k;
             lsf[ndx] += dt * sdf_dt[ndx];
         }
     }
